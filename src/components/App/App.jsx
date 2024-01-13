@@ -6,13 +6,13 @@ import './App.css';
 function App() {
   return (
     <div className="App">
-      <Header />
-      <FamousSection />
-      {/* 
-        The list shouldn't go here.
-        The list goes inside of the FamousSection Component
-      */}
-    </div>
+    <Header />
+    <FamousSection />
+    {/* 
+      The list shouldn't go here.
+      The list goes inside of the FamousSection Component
+    */}
+  </div>
   );
 }
 
