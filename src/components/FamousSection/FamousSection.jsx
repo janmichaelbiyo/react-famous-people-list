@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+
+import { getPeople } from '../peopleApi/peoopleApi.js';
+import { postPeople } from '../peopleApi/peoopleApi.js';
 import './FamousSection.css';
 
-function FamousSection() {
+function FamousSection(props) {
   let [famousPersonName, setPersonName] = useState('');
   let [famousPersonRole, setPersonRole] = useState('');
   let [famousPeopleArray, setPeopleArray] = useState([]);
@@ -24,18 +26,20 @@ function FamousSection() {
     // someone made a tool that will translate all of our JS code and data
     // into some other format. This way it can be sent and received by all of the
     // computers that are in between our client and our server. 
-axios.get('/api/people')
-    .then((result) => { 
-      console.log(result.data)
-      setPeopleArray(result.data);
+
+const peoplePromise = getPeople();
+    peoplePromise
+
+    .then((response) => { 
+      console.log(response.data)
+      setPeopleArray(response.data);
     })
     .catch((error) => {
       console.log('this sucks you are wrong', error)
     });
-       
-    
-}
   
+};
+ 
    
 
   const addPerson = (evt) => {
@@ -44,10 +48,23 @@ axios.get('/api/people')
     
     // TODO: create POST request to add this new person to the database
 
+    postPeople({
+      name: famousPersonName,
+      role: famousPersonRole,
+    })
+      .then((response) =>{
+          // props.peopleCallback();
+          fetchPeople();
+      })
+      .catch((error) => {
+        console.log('you dummy', error)
+      });
+};   
+
     // HINT: the server is expecting a person object 
     //       with a `name` and a `role` property
   
-  }
+  
 
   useEffect(() => {
     fetchPeople()
