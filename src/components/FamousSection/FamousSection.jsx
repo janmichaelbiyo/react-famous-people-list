@@ -54,7 +54,11 @@ const peoplePromise = getPeople();
     })
       .then((response) =>{
           // props.peopleCallback();
+          
           fetchPeople();
+
+          setPersonName('');
+          setPersonRole('');
       })
       .catch((error) => {
         console.log('you dummy', error)
@@ -65,6 +69,7 @@ const peoplePromise = getPeople();
     //       with a `name` and a `role` property
   
   
+   
 
   useEffect(() => {
     fetchPeople()
@@ -75,9 +80,11 @@ const peoplePromise = getPeople();
       <section className="new-person-section">
         <form onSubmit={addPerson}>
           <label htmlFor="name-input">Name:</label>
-          <input id="name-input" onChange={e => setPersonName(e.target.value)} />
+          <input id="name-input" onChange={e => setPersonName(e.target.value)}
+          value={famousPersonName} />
           <label htmlFor="role-input">Famous for:</label>
-          <input id="role-input" onChange={e => setPersonRole(e.target.value)} />
+          <input id="role-input" onChange={e => setPersonRole(e.target.value)}
+          value={famousPersonRole} />
           <button type="submit">Done</button>
         </form>
         <p>
@@ -86,10 +93,12 @@ const peoplePromise = getPeople();
         <ul>
           {/* TODO: Render the list of famous people */}
           {famousPeopleArray.map( 
-            (famousperson)=>{
+            (famousperson, dataIndex)=>{
               return(
-                // console.log(famousperson.name)
+              <div key={dataIndex}>
+                
                 <li>{famousperson.name}, {famousperson.role}</li>
+                </div>
               )
             }
           )}
